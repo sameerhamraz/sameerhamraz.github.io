@@ -16,10 +16,24 @@
       color: white;
       padding: 20px;
     }
+    nav {
+      margin-top: 15px;
+    }
     nav a {
-      color: white;
+      display: inline-block;
       margin: 0 10px;
+      padding: 10px 20px;
       text-decoration: none;
+      color: white;
+      border-radius: 25px; /* دکمه گرد */
+      background-color: #ff5252; /* رنگ قرمز جذاب */
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:nth-child(2) { background-color: #4caf50; } /* سبز برای ماشین حساب */
+    nav a:nth-child(3) { background-color: #2196f3; } /* آبی برای بازی */
+    nav a:hover {
+      opacity: 0.8;
     }
     section {
       background: white;
@@ -44,11 +58,13 @@
     <h1>سلام خوش آمدین 🌸</h1>
     <p>من Sameer Hamraz هستم 👋</p>
     <nav>
-  <a href="index.html">خانه</a>
-  <a href="calculator.html">ماشین حساب</a>
-  <a href="game.html">بازی</a>
-</nav>
-  <section id="calculator">
+      <a href="index.html">خانه</a>
+      <a href="calculator.html">ماشین حساب</a>
+      <a href="game.html">بازی</a>
+    </nav>
+  </header>
+
+  <section id="about">
     <h2>درباره من</h2>
     <p>من به تکنولوژی، یادگیری و ساختن چیزهای تازه علاقه دارم.  
     این سایت رو ساختم تا تجربه‌ها و پروژه‌های خودم رو با شما شریک کنم.</p>
