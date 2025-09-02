@@ -1,31 +1,25 @@
-<section id="game">
+<section id="game" style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size:2em;">
   <h2>بازی سنگ – کاغذ – قیچی ✊ ✋ ✌️</h2>
-  <div class="rps">
-    <button onclick="play('سنگ')">✊ سنگ</button>
-    <button onclick="play('کاغذ')">✋ کاغذ</button>
-    <button onclick="play('قیچی')">✌️ قیچی</button>
+  <div class="rps" style="display:flex; gap:30px; margin-top:20px;">
+    <button onclick="play('سنگ')" style="padding:30px 50px; border-radius:50%; background-color:#ff5252; color:white; font-size:2em;">✊ سنگ</button>
+    <button onclick="play('کاغذ')" style="padding:30px 50px; border-radius:50%; background-color:#4caf50; color:white; font-size:2em;">✋ کاغذ</button>
+    <button onclick="play('قیچی')" style="padding:30px 50px; border-radius:50%; background-color:#2196f3; color:white; font-size:2em;">✌️ قیچی</button>
   </div>
-  <p id="result">یک گزینه انتخاب کن...</p>
+  <p id="result" style="margin-top:40px; font-size:2em;">یک گزینه انتخاب کن...</p>
 </section>
 
 <script>
-  function play(userChoice) {
-    const choices = ["سنگ", "کاغذ", "قیچی"];
-    const computerChoice = choices[Math.floor(Math.random() * 3)];
-    let result = "";
-
-    if (userChoice === computerChoice) {
-      result = "مساوی شد! 😅";
-    } else if (
-      (userChoice === "سنگ" && computerChoice === "قیچی") ||
-      (userChoice === "کاغذ" && computerChoice === "سنگ") ||
-      (userChoice === "قیچی" && computerChoice === "کاغذ")
-    ) {
-      result = `تو بردی! 🎉 (${userChoice} در برابر ${computerChoice})`;
-    } else {
-      result = `کامپیوتر برد 😈 (${computerChoice} در برابر ${userChoice})`;
-    }
-
-    document.getElementById("result").textContent = result;
+  function play(userChoice){
+    const choices=["سنگ","کاغذ","قیچی"];
+    const computerChoice=choices[Math.floor(Math.random()*3)];
+    let result="";
+    if(userChoice===computerChoice){ result="مساوی شد! 😅"; }
+    else if(
+      (userChoice==="سنگ" && computerChoice==="قیچی")||
+      (userChoice==="کاغذ" && computerChoice==="سنگ")||
+      (userChoice==="قیچی" && computerChoice==="کاغذ")
+    ){ result=`تو بردی! 🎉 (${userChoice} در برابر ${computerChoice})`; }
+    else{ result=`کامپیوتر برد 😈 (${computerChoice} در برابر ${userChoice})`; }
+    document.getElementById("result").textContent=result;
   }
 </script>
