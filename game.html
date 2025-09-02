@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <title>بازی | Sameer</title>
 <style>
-body{font-family:sans-serif; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#f0f8ff; margin:0; text-align:center; font-size:2em;}
-button{padding:30px 50px; border-radius:50%; font-size:2em; cursor:pointer; transition:0.3s; margin:10px;}
+body{font-family:sans-serif; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; background:#f0f8ff; margin:0; font-size:2em;}
+button{padding:30px 50px; border-radius:50%; font-size:2em; cursor:pointer; margin:10px; transition:0.3s;}
 button:hover{opacity:0.8;}
-#result{margin-top:40px; font-size:2em; color:#ff5252;}
+#result{margin-top:40px; font-size:1.5em; color:#ff5252;}
 </style>
 </head>
 <body>
 <h2>بازی سنگ – کاغذ – قیچی ✊ ✋ ✌️</h2>
-<div class="rps">
+<div>
 <button onclick="play('سنگ')" style="background:#ff5252; color:white;">✊ سنگ</button>
 <button onclick="play('کاغذ')" style="background:#4caf50; color:white;">✋ کاغذ</button>
 <button onclick="play('قیچی')" style="background:#2196f3; color:white;">✌️ قیچی</button>
@@ -24,9 +24,11 @@ function play(userChoice){
 const choices=["سنگ","کاغذ","قیچی"];
 const computerChoice=choices[Math.floor(Math.random()*3)];
 let result="";
-if(userChoice===computerChoice){result="مساوی شد! 😅";}
-else if((userChoice==="سنگ"&&computerChoice==="قیچی")||(userChoice==="کاغذ"&&computerChoice==="سنگ")||(userChoice==="قیچی"&&computerChoice==="کاغذ")){result=`تو بردی! 🎉 (${userChoice} در برابر ${computerChoice})`;}
-else{result=`کامپیوتر برد 😈 (${computerChoice} در برابر ${userChoice})`;}
+if(userChoice===computerChoice) result="مساوی شد! 😅";
+else if((userChoice==="سنگ"&&computerChoice==="قیچی")||(userChoice==="کاغذ"&&computerChoice==="سنگ")||(userChoice==="قیچی"&&computerChoice==="کاغذ"))
+  result=`تو بردی! 🎉 (${userChoice} در برابر ${computerChoice})`;
+else
+  result=`کامپیوتر برد 😈 (${computerChoice} در برابر ${userChoice})`;
 document.getElementById("result").textContent=result;
 }
 </script>
