@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>حدس زدن اسم و سن</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f8ff;
+      text-align: center;
+      padding: 20px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #005f99;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff5252;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>سلام! من می‌توانم اسم و سن شما را حدس بزنم 😎</h2>
+  <p>لطفاً اسم و سن خود را وارد کنید:</p>
+  
+  <input type="text" id="name" placeholder="اسم شما">
+  <input type="number" id="age" placeholder="سن شما">
+  <br>
+  <button onclick="guess()">حدس بزن!</button>
+
+  <p id="result"></p>
+
+  <script>
+    function guess() {
+      const name = document.getElementById("name").value.trim();
+      const age = document.getElementById("age").value.trim();
+
+      if (!name || !age) {
+        alert("لطفاً هر دو فیلد را پر کنید!");
+        return;
+      }
+
+      const resultText = `سلام! من می‌فهمم که اسم تو ${name} است و سن تو ${age} سال است. و بسیار یک آدم پوک هستی 😜`;
+      document.getElementById("result").textContent = resultText;
+    }
+  </script>
+
+</body>
+</html>
