@@ -55,8 +55,8 @@
 </head>
 <body>
   <header>
-    <h1>سلام خوش امدید 🌸</h1>
-    <p>هستم sameerhamraz من   👋</p>
+    <h1>سلام خوش آمدید 🌸</h1>
+    <p>هستم sameerhamraz من 👋</p>
     <nav>
       <a href="index.html">خانه</a>
       <a href="calculator.html">ماشین حساب</a>
@@ -82,7 +82,17 @@
   <section id="contact">
     <h2>تماس با من</h2>
     <p>📧 ایمیل: <a href="mailto:sameer.hamraz4@gmail.com">sameer.hamraz4@gmail.com</a></p>
-    <p>💻 گیت‌هاب: <a href="https:https://github.com/sameerhamraz">https://github.com/sameerhamraz</a></p>
+    <p>💻 گیت‌هاب: <a href="https://github.com/sameerhamraz">https://github.com/sameerhamraz</a></p>
   </section>
+
+  <!-- کد ورود -->
+  <script>
+    window.onload = function () {
+      let pass = prompt("برای ورود به سایت کد را وارد کنید:");
+      if (pass !== "426729") {
+        document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:50px;'>❌ کد اشتباه است! دسترسی ندارید.</h1>";
+      }
+    }
+  </script>
 </body>
 </html>
