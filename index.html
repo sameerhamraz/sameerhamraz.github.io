@@ -1,62 +1,197 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <title>سایت من | Sameer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
+    /* ---------- متغیرهای رنگی ---------- */
+    :root {
+      --bg: #f5f5f5;
+      --card: #ffffff;
+      --text: #111;
+      --muted: #2b2b2b;
+      --link: #007acc;
+      --shadow: 0 0 10px rgba(0,0,0,0.1);
+      --header-bg: #007acc;
+      --btn1: #ff5252;
+      --btn2: #4caf50;
+      --btn3: #2196f3;
+      --chip-bg: rgba(0,0,0,0.06);
+      --chip-text: #333;
+      --toggle-bg: #eaeaea;
+      --toggle-text: #222;
+    }
+
+    /* حالت تیره */
+    :root.dark {
+      --bg: #0f1115;
+      --card: #151923;
+      --text: #e8e8e8;
+      --muted: #cfcfcf;
+      --link: #66b5ff;
+      --shadow: 0 0 24px rgba(0,0,0,0.35);
+      --header-bg: #0b5aa8;
+      --btn1: #ff4d4d;
+      --btn2: #2fbf71;
+      --btn3: #3a8be8;
+      --chip-bg: rgba(255,255,255,0.06);
+      --chip-text: #ddd;
+      --toggle-bg: #222833;
+      --toggle-text: #e8e8e8;
+    }
+
+    /* هماهنگی خودکار با سیستم */
+    @media (prefers-color-scheme: dark) {
+      :root:not(.light) { /* اگر کاربر دستی light نکرده باشد */
+        --bg: #0f1115;
+        --card: #151923;
+        --text: #e8e8e8;
+        --muted: #cfcfcf;
+        --link: #66b5ff;
+        --shadow: 0 0 24px rgba(0,0,0,0.35);
+        --header-bg: #0b5aa8;
+        --btn1: #ff4d4d;
+        --btn2: #2fbf71;
+        --btn3: #3a8be8;
+        --chip-bg: rgba(255,255,255,0.06);
+        --chip-text: #ddd;
+        --toggle-bg: #222833;
+        --toggle-text: #e8e8e8;
+      }
+    }
+
+    /* ---------- استایل‌ها ---------- */
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; }
     body {
       font-family: sans-serif;
       text-align: center;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
     }
+
     header {
-      background: #007acc;
+      background: var(--header-bg);
       color: white;
       padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
+
+    .topbar {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
     nav {
-      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 12px;
     }
+
     nav a {
       display: inline-block;
-      margin: 0 10px;
-      padding: 10px 20px;
+      padding: 10px 18px;
       text-decoration: none;
       color: white;
-      border-radius: 25px; /* دکمه گرد */
-      background-color: #ff5252; /* رنگ قرمز جذاب */
+      border-radius: 25px;
       font-weight: bold;
-      transition: 0.3s;
+      transition: transform .12s ease, opacity .2s ease;
     }
-    nav a:nth-child(2) { background-color: #4caf50; } /* سبز برای ماشین حساب */
-    nav a:nth-child(3) { background-color: #2196f3; } /* آبی برای بازی */
-    nav a:hover {
-      opacity: 0.8;
+    nav a:nth-child(1) { background-color: var(--btn1); }
+    nav a:nth-child(2) { background-color: var(--btn2); }
+    nav a:nth-child(3) { background-color: var(--btn3); }
+    nav a:hover { opacity: .9; transform: translateY(-1px); }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--toggle-bg);
+      color: var(--toggle-text);
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .12s ease, opacity .2s ease;
+      user-select: none;
     }
+    .toggle:hover { opacity: .95; transform: translateY(-1px); }
+
     section {
-      background: white;
+      background: var(--card);
       margin: 20px auto;
       padding: 20px;
       max-width: 800px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
       text-align: right;
       direction: rtl;
     }
-    h2 {
-      color: #007acc;
+
+    h1, h2 { margin: 0 0 10px; }
+    h2 { color: var(--link); }
+
+    a { color: var(--link); }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
     }
-    a {
-      color: #007acc;
+
+    .chip {
+      background: var(--chip-bg);
+      color: var(--chip-text);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .muted { color: var(--muted); }
+
+    /* انیمیشن‌های لطیف */
+    .fade-in { animation: fade .28s ease both; }
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
+
+  <!-- پیش‌لود کوچک برای جلوگیری از چشمک بین حالت‌ها -->
+  <script>
+    (function(){
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') document.documentElement.classList.add('dark');
+        if (saved === 'light') document.documentElement.classList.add('light');
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
   <header>
-    <h1>سلام خوش آمدید 🌸</h1>
-    <p>هستم sameerhamraz من 👋</p>
+    <div class="topbar">
+      <div style="text-align:right">
+        <h1>سلام خوش آمدید 🌸</h1>
+        <p class="muted">هستم sameerhamraz من 👋</p>
+      </div>
+
+      <!-- دکمه‌ی تغییر حالت -->
+      <button id="themeToggle" class="toggle" aria-label="تغییر حالت روشن/تاریک">🌓 حالت تیره</button>
+    </div>
+
     <nav>
       <a href="index.html">خانه</a>
       <a href="calculator.html">ماشین حساب</a>
@@ -64,35 +199,65 @@
     </nav>
   </header>
 
-  <section id="about">
+  <section id="about" class="fade-in">
     <h2>درباره من</h2>
-    <p>من به تکنولوژی، یادگیری و ساختن چیزهای تازه علاقه دارم.  
-    این سایت را ساختم تا تجربه‌ها و پروژه‌های خودم رو با شما شریک کنم.</p>
+    <p>من به تکنولوژی، یادگیری و ساختن چیزهای تازه علاقه دارم. این سایت را ساختم تا تجربه‌ها و پروژه‌های خودم رو با شما شریک کنم.</p>
+    <div class="chips">
+      <span class="chip">HTML</span>
+      <span class="chip">CSS</span>
+      <span class="chip">GitHub Pages</span>
+    </div>
   </section>
 
-  <section id="projects">
+  <section id="projects" class="fade-in">
     <h2>پروژه‌ها</h2>
     <ul>
       <li><a href="BD88B86B-63AA-401F-9C8C-4D9F09DB018A_converted.pdf">پروژه ۱</a> – image 1 </li>
       <li><a href="5C73EB06-21E5-4F23-BEB8-933E8337ECD5_converted.png">پروژه ۲</a> – image 2 </li>
-      <li><a href="IMG_6674.PNG"> پروژه ۳</a> - image 3 </li>
+      <li><a href="IMG_6674.PNG">پروژه ۳</a> – image 3 </li>
     </ul>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="fade-in">
     <h2>تماس با من</h2>
     <p>📧 ایمیل: <a href="mailto:sameer.hamraz4@gmail.com">sameer.hamraz4@gmail.com</a></p>
     <p>💻 گیت‌هاب: <a href="https://github.com/sameerhamraz">https://github.com/sameerhamraz</a></p>
   </section>
 
-  <!-- کد ورود -->
+  <!-- جاوااسکریپت: کد ورود + تغییر تم -->
   <script>
-    window.onload = function () {
-      let pass = prompt("برای ورود به سایت کد را وارد کنید:");
+    // --- کد ورود ساده ---
+    (function gate(){
+      var pass = prompt("برای ورود به سایت کد را وارد کنید:");
       if (pass !== "426729") {
         document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:50px;'>❌ کد اشتباه است! دسترسی ندارید.</h1>";
       }
-    }
+    })();
+
+    // --- تغییر تم / ذخیره انتخاب ---
+    (function theme(){
+      const btn = document.getElementById('themeToggle');
+      const doc = document.documentElement;
+
+      function applyLabel(){
+        const dark = doc.classList.contains('dark');
+        btn.textContent = dark ? "🌞 حالت روشن" : "🌓 حالت تیره";
+        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      }
+
+      btn.addEventListener('click', () => {
+        // اگر عمداً light شده، برگردانیم
+        if (doc.classList.contains('light')) doc.classList.remove('light');
+
+        doc.classList.toggle('dark');
+        try { localStorage.setItem('theme', doc.classList.contains('dark') ? 'dark' : 'light'); } catch(e){}
+
+        applyLabel();
+      });
+
+      // برچسب اولیه
+      applyLabel();
+    })();
   </script>
 </body>
 </html>
