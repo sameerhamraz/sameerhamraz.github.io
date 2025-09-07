@@ -44,7 +44,7 @@
 
     /* هماهنگی خودکار با سیستم */
     @media (prefers-color-scheme: dark) {
-      :root:not(.light) { /* اگر کاربر دستی light نکرده باشد */
+      :root:not(.light) {
         --bg: #0f1115;
         --card: #151923;
         --text: #e8e8e8;
@@ -169,7 +169,6 @@
     }
   </style>
 
-  <!-- پیش‌لود کوچک برای جلوگیری از چشمک بین حالت‌ها -->
   <script>
     (function(){
       try {
@@ -187,8 +186,6 @@
         <h1>سلام خوش آمدید 🌸</h1>
         <p class="muted">هستم sameerhamraz من 👋</p>
       </div>
-
-      <!-- دکمه‌ی تغییر حالت -->
       <button id="themeToggle" class="toggle" aria-label="تغییر حالت روشن/تاریک">🌓 حالت تیره</button>
     </div>
 
@@ -201,31 +198,35 @@
 
   <section id="about" class="fade-in">
     <h2>درباره من</h2>
-    <p>من به تکنولوژی، یادگیری و ساختن چیزهای تازه علاقه دارم. این سایت را ساختم تا تجربه‌ها و پروژه‌های خودم رو با شما شریک کنم.</p>
-    <div class="chips">
-      <span class="chip">HTML</span>
-      <span class="chip">CSS</span>
-      <span class="chip">GitHub Pages</span>
-    </div>
+    <p>من به تکنولوژی، یادگیری و ساختن چیزهای تازه علاقه دارم...</p>
   </section>
 
   <section id="projects" class="fade-in">
     <h2>پروژه‌ها</h2>
     <ul>
-      <li><a href="IMG_7297.jpeg">پروژه ۱</a> – image 1 </li>
-      <li><a href="IMG_6282.jpeg">پروژه ۲</a> – image 2 </li>
+      <li><a href="IMG_7297.jpeg">پروژه ۱</a></li>
+      <li><a href="IMG_6282.jpeg">پروژه ۲</a></li>
     </ul>
   </section>
 
   <section id="contact" class="fade-in">
     <h2>تماس با من</h2>
     <p>📧 ایمیل: <a href="mailto:sameer.hamraz4@gmail.com">sameer.hamraz4@gmail.com</a></p>
-    <p>💻 گیت‌هاب: <a href="https://github.com/sameerhamraz">https://github.com/sameerhamraz</a></p>
+    <p>💻 گیت‌هاب: <a href="https://github.com/sameerhamraz">github.com/sameerhamraz</a></p>
   </section>
 
-  <!-- جاوااسکریپت: کد ورود + تغییر تم -->
+  <!-- 🔥 بخش تست سرعت -->
+  <section id="speedtest" class="fade-in">
+    <h2>تست سرعت اینترنت</h2>
+    <p>روی دکمه زیر بزن تا سرعت دانلودت محاسبه شود</p>
+    <button id="startTest">🚀 شروع تست</button>
+    <div style="margin-top:10px">
+      <strong>سرعت:</strong> <span id="result">—</span> Mbps
+    </div>
+  </section>
+
   <script>
-    // --- کد ورود ساده ---
+    // --- کد ورود ---
     (function gate(){
       var pass = prompt("برای ورود به سایت کد را وارد کنید:");
       if (pass !== "426729") {
@@ -233,29 +234,37 @@
       }
     })();
 
-    // --- تغییر تم / ذخیره انتخاب ---
+    // --- تغییر تم ---
     (function theme(){
       const btn = document.getElementById('themeToggle');
       const doc = document.documentElement;
-
       function applyLabel(){
         const dark = doc.classList.contains('dark');
         btn.textContent = dark ? "🌞 حالت روشن" : "🌓 حالت تیره";
-        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
       }
-
       btn.addEventListener('click', () => {
-        // اگر عمداً light شده، برگردانیم
         if (doc.classList.contains('light')) doc.classList.remove('light');
-
         doc.classList.toggle('dark');
         try { localStorage.setItem('theme', doc.classList.contains('dark') ? 'dark' : 'light'); } catch(e){}
-
         applyLabel();
       });
-
-      // برچسب اولیه
       applyLabel();
+    })();
+
+    // --- تست سرعت ---
+    (function speedTest(){
+      const btn = document.getElementById("startTest");
+      const out = document.getElementById("result");
+      btn.addEventListener("click", async () => {
+        out.textContent = "⏳ در حال تست...";
+        const url = "https://speed.hetzner.de/10MB.bin";
+        const start = performance.now();
+        const resp = await fetch(url + "?cache=" + Math.random(), { cache: "no-store" });
+        const blob = await resp.blob();
+        const duration = (performance.now() - start) / 1000;
+        const mbps = ((blob.size * 8) / duration / 1e6).toFixed(2);
+        out.textContent = mbps + " Mbps";
+      });
     })();
   </script>
 </body>
