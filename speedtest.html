@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تست سرعت اینترنت</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #0f1115;
+      color: #e8e8e8;
+      margin: 0;
+      padding: 50px 20px;
+    }
+    h1 { margin-bottom: 20px; }
+    #speed {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #4caf50;
+    }
+    button {
+      padding: 12px 24px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #2196f3;
+      color: white;
+    }
+    button:hover { opacity: .9; }
+    .muted { color: #aaa; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🚀 تست سرعت اینترنت</h1>
+  <div id="speed">— Mbps</div>
+  <button id="start">شروع تست</button>
+  <p class="muted">این تست با دانلود فایل‌های نمونه سرعت شما را محاسبه می‌کند.</p>
+
+  <script>
+    async function measureSpeed() {
+      const url = "https://speed.hetzner.de/5MB.bin"; // فایل تست 5MB
+      const start = performance.now();
+      const resp = await fetch(url + "?cache=" + Math.random(), { cache: "no-store" });
+      const blob = await resp.blob();
+      const duration = (performance.now() - start) / 1000;
+      const mbps = ((blob.size * 8) / duration / 1e6).toFixed(2);
+      return mbps;
+    }
+
+    document.getElementById("start").addEventListener("click", async () => {
+      const speedEl = document.getElementById("speed");
+      speedEl.textContent = "⏳ در حال تست...";
+      let keepTesting = true;
+
+      // هر ۳ ثانیه یک بار سرعت را دوباره بسنجد
+      while (keepTesting) {
+        const mbps = await measureSpeed();
+        speedEl.textContent = mbps + " Mbps";
+        await new Promise(r => setTimeout(r, 3000));
+      }
+    });
+  </script>
+</body>
+</html>
