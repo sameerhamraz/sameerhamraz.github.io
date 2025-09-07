@@ -41,7 +41,7 @@
 
   <script>
     async function measureSpeed() {
-      const url = "https://speed.hetzner.de/5MB.bin"; // فایل تست 5MB
+      const url = "https://www.cloudflare.com/img/cdn-cgi/images/trace/1.png"; // فایل کوچک مطمئن
       const start = performance.now();
       const resp = await fetch(url + "?cache=" + Math.random(), { cache: "no-store" });
       const blob = await resp.blob();
@@ -53,13 +53,14 @@
     document.getElementById("start").addEventListener("click", async () => {
       const speedEl = document.getElementById("speed");
       speedEl.textContent = "⏳ در حال تست...";
-      let keepTesting = true;
-
-      // هر ۳ ثانیه یک بار سرعت را دوباره بسنجد
-      while (keepTesting) {
-        const mbps = await measureSpeed();
-        speedEl.textContent = mbps + " Mbps";
-        await new Promise(r => setTimeout(r, 3000));
+      while (true) {
+        try {
+          const mbps = await measureSpeed();
+          speedEl.textContent = mbps + " Mbps";
+        } catch(e) {
+          speedEl.textContent = "❌ خطا در تست";
+        }
+        await new Promise(r => setTimeout(r, 3000)); // هر ۳ ثانیه آپدیت
       }
     });
   </script>
