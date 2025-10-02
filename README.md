@@ -1,1 +1,1 @@
-# sameerhamraz.github.io
+# sameerhamraz.io
