@@ -1,262 +1,182 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<!--
+Single-file responsive website template inspired by afghanrayan.org.
+Replace text, links and images with your own content. Uses Tailwind CSS CDN.
+-->
+<!doctype html>
+<html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>سایت من | Sameer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AfghanRayan — نمونه وب‌سایت</title>
+  <meta name="description" content="شرکت افغان راین - خدمات فناوری اطلاعات، میزبانی وب، توسعه نرم‌افزار و پشتیبانی" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* ---------- متغیرهای رنگی ---------- */
-    :root {
-      --bg: #f5f5f5;
-      --card: #ffffff;
-      --text: #111;
-      --muted: #2b2b2b;
-      --link: #007acc;
-      --shadow: 0 0 10px rgba(0,0,0,0.1);
-      --header-bg: #007acc;
-      --btn1: #ff5252;
-      --btn2: #4caf50;
-      --btn3: #2196f3;
-      --chip-bg: rgba(0,0,0,0.06);
-      --chip-text: #333;
-      --toggle-bg: #eaeaea;
-      --toggle-text: #222;
-    }
-
-    /* حالت تیره */
-    :root.dark {
-      --bg: #0f1115;
-      --card: #151923;
-      --text: #e8e8e8;
-      --muted: #cfcfcf;
-      --link: #66b5ff;
-      --shadow: 0 0 24px rgba(0,0,0,0.35);
-      --header-bg: #0b5aa8;
-      --btn1: #ff4d4d;
-      --btn2: #2fbf71;
-      --btn3: #3a8be8;
-      --chip-bg: rgba(255,255,255,0.06);
-      --chip-text: #ddd;
-      --toggle-bg: #222833;
-      --toggle-text: #e8e8e8;
-    }
-
-    /* هماهنگی خودکار با سیستم */
-    @media (prefers-color-scheme: dark) {
-      :root:not(.light) { /* اگر کاربر دستی light نکرده باشد */
-        --bg: #0f1115;
-        --card: #151923;
-        --text: #e8e8e8;
-        --muted: #cfcfcf;
-        --link: #66b5ff;
-        --shadow: 0 0 24px rgba(0,0,0,0.35);
-        --header-bg: #0b5aa8;
-        --btn1: #ff4d4d;
-        --btn2: #2fbf71;
-        --btn3: #3a8be8;
-        --chip-bg: rgba(255,255,255,0.06);
-        --chip-text: #ddd;
-        --toggle-bg: #222833;
-        --toggle-text: #e8e8e8;
-      }
-    }
-
-    /* ---------- استایل‌ها ---------- */
-    * { box-sizing: border-box; }
-    html, body { margin:0; padding:0; }
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      background-color: var(--bg);
-      color: var(--text);
-    }
-
-    header {
-      background: var(--header-bg);
-      color: white;
-      padding: 20px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .topbar {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 12px;
-    }
-
-    nav a {
-      display: inline-block;
-      padding: 10px 18px;
-      text-decoration: none;
-      color: white;
-      border-radius: 25px;
-      font-weight: bold;
-      transition: transform .12s ease, opacity .2s ease;
-    }
-    nav a:nth-child(1) { background-color: var(--btn1); }
-    nav a:nth-child(2) { background-color: var(--btn2); }
-    nav a:nth-child(3) { background-color: var(--btn3); }
-    nav a:hover { opacity: .9; transform: translateY(-1px); }
-
-    .toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--toggle-bg);
-      color: var(--toggle-text);
-      border: 0;
-      border-radius: 999px;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: transform .12s ease, opacity .2s ease;
-      user-select: none;
-    }
-    .toggle:hover { opacity: .95; transform: translateY(-1px); }
-
-    section {
-      background: var(--card);
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 800px;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      text-align: right;
-      direction: rtl;
-    }
-
-    h1, h2 { margin: 0 0 10px; }
-    h2 { color: var(--link); }
-
-    a { color: var(--link); }
-
-    .chips {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .chip {
-      background: var(--chip-bg);
-      color: var(--chip-text);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-    }
-
-    .muted { color: var(--muted); }
-
-    /* انیمیشن‌های لطیف */
-    .fade-in { animation: fade .28s ease both; }
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(4px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    /* small custom styles */
+    .hero-bg{ background-image: linear-gradient(90deg, rgba(11,30,68,0.85), rgba(2,63,92,0.65)), url('https://via.placeholder.com/1600x900'); background-size: cover; background-position: center; }
   </style>
-
-  <!-- پیش‌لود کوچک برای جلوگیری از چشمک بین حالت‌ها -->
-  <script>
-    (function(){
-      try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'dark') document.documentElement.classList.add('dark');
-        if (saved === 'light') document.documentElement.classList.add('light');
-      } catch(e) {}
-    })();
-  </script>
 </head>
-<body>
-  <header>
-    <div class="topbar">
-      <div style="text-align:right">
-        <h1>سلام خوش آمدید 🌸</h1>
-        <p class="muted">هستم sameerhamraz من 👋</p>
+<body class="antialiased text-gray-800">
+  <!-- NAVIGATION -->
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center gap-3">
+          <img src="https://via.placeholder.com/48" alt="logo" class="h-12 w-12 rounded" />
+          <div>
+            <a href="#" class="text-xl font-bold">AfghanRayan</a>
+            <div class="text-sm text-gray-500">توسعه و راهکارهای آی‌تی</div>
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="#services" class="hover:text-sky-700">خدمات</a>
+          <a href="#projects" class="hover:text-sky-700">پروژه‌ها</a>
+          <a href="#news" class="hover:text-sky-700">اخبار</a>
+          <a href="#contact" class="hover:text-sky-700">تماس</a>
+        </nav>
+        <div class="md:hidden">
+          <button id="menuBtn" aria-label="menu" class="p-2 rounded-md focus:outline-none focus:ring">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
       </div>
-
-      <!-- دکمه‌ی تغییر حالت -->
-      <button id="themeToggle" class="toggle" aria-label="تغییر حالت روشن/تاریک">🌓 حالت تیره</button>
     </div>
-
-    <nav>
-      <a href="index.html">خانه</a>
-      <a href="calculator.html">ماشین حساب</a>
-      <a href="game.html">بازی</a>
-    </nav>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="#services" class="block">خدمات</a>
+        <a href="#projects" class="block">پروژه‌ها</a>
+        <a href="#news" class="block">اخبار</a>
+        <a href="#contact" class="block">تماس</a>
+      </div>
+    </div>
   </header>
 
-  <section id="about" class="fade-in">
-    <h2>درباره من</h2>
-    <p>من به تکنولوژی، یادگیری و ساختن چیزهای تازه علاقه دارم. این سایت را ساختم تا تجربه‌ها و پروژه‌های خودم رو با شما شریک کنم.</p>
-    <div class="chips">
-      <span class="chip">HTML</span>
-      <span class="chip">CSS</span>
-      <span class="chip">GitHub Pages</span>
+  <!-- HERO -->
+  <section class="hero-bg text-white">
+    <div class="max-w-7xl mx-auto px-4 py-24 sm:py-32">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl sm:text-5xl font-extrabold">خدمات فناوری اطلاعات و راه‌حل‌های دیجیتال</h1>
+        <p class="mt-4 text-lg text-gray-100">ما در افغان‌راین طراحی، توسعه و میزبانی امن را برای کسب‌وکارها فراهم می‌کنیم — از وب‌سایت‌های شرکتی تا سیستم‌های سفارشی.</p>
+        <div class="mt-8 flex gap-4">
+          <a href="#contact" class="px-5 py-3 bg-sky-600 rounded-md font-medium hover:bg-sky-700">تماس با ما</a>
+          <a href="#projects" class="px-5 py-3 bg-white/10 rounded-md font-medium hover:bg-white/20">مشاهده پروژه‌ها</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="projects" class="fade-in">
-    <h2>پروژه‌ها</h2>
-    <ul>
-      <li><a href="IMG_0143.jpg">پروژه ۱</a> – image 1 </li>
-      <li><a href="">پروژه ۲</a> – image 2 </li>
-    </ul>
+  <!-- SERVICES -->
+  <section id="services" class="max-w-7xl mx-auto px-4 py-16">
+    <h2 class="text-2xl font-bold">خدمات ما</h2>
+    <p class="mt-2 text-gray-600">چند نمونه از خدمات محبوب ما:</p>
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-6 border rounded-lg">
+        <h3 class="font-semibold">توسعه وب</h3>
+        <p class="mt-2 text-sm text-gray-600">طراحی سایت، سامانه‌های وب و اپلیکیشن‌های تحت وب با آخرین تکنولوژی‌ها.</p>
+      </div>
+      <div class="p-6 border rounded-lg">
+        <h3 class="font-semibold">میزبانی و دامنه</h3>
+        <p class="mt-2 text-sm text-gray-600">هاستینگ پایدار، ثبت دامنه و پشتیبانی فنی 24/7.</p>
+      </div>
+      <div class="p-6 border rounded-lg">
+        <h3 class="font-semibold">امنیت و نگهداری</h3>
+        <p class="mt-2 text-sm text-gray-600">حفاظت از سایت، پشتیبان‌گیری منظم و به‌روزرسانی‌های امنیتی.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="contact" class="fade-in">
-    <h2>تماس با من</h2>
-    <p>📧 ایمیل: <a href="mailto:sameer.hamraz4@gmail.com">sameer.hamraz4@gmail.com</a></p>
-    <p>💻 گیت‌هاب: <a href="https://github.com/sameerhamraz">https://github.com/sameerhamraz</a></p>
+  <!-- PROJECTS / PORTFOLIO -->
+  <section id="projects" class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-bold">پروژه‌های اخیر</h2>
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card -->
+        <article class="bg-white rounded-lg shadow p-4">
+          <img src="https://via.placeholder.com/600x340" alt="project" class="w-full h-40 object-cover rounded" />
+          <h4 class="mt-3 font-semibold">سیستم مدیریت محتوا</h4>
+          <p class="mt-2 text-sm text-gray-600">پیاده‌سازی CMS سفارشی برای یک شرکت محلی.</p>
+          <div class="mt-3 text-sm text-sky-600">مشاهده جزئیات →</div>
+        </article>
+        <!-- repeat as needed -->
+        <article class="bg-white rounded-lg shadow p-4">
+          <img src="https://via.placeholder.com/600x340" alt="project" class="w-full h-40 object-cover rounded" />
+          <h4 class="mt-3 font-semibold">فروشگاه آنلاین</h4>
+          <p class="mt-2 text-sm text-gray-600">فروشگاه با درگاه پرداخت و پنل مدیریت کامل.</p>
+          <div class="mt-3 text-sm text-sky-600">مشاهده جزئیات →</div>
+        </article>
+        <article class="bg-white rounded-lg shadow p-4">
+          <img src="https://via.placeholder.com/600x340" alt="project" class="w-full h-40 object-cover rounded" />
+          <h4 class="mt-3 font-semibold">پلتفرم آموزشی</h4>
+          <p class="mt-2 text-sm text-gray-600">سامانه آموزش الکترونیکی برای مؤسسات آموزشی.</p>
+          <div class="mt-3 text-sm text-sky-600">مشاهده جزئیات →</div>
+        </article>
+      </div>
+    </div>
   </section>
 
-  <!-- جاوااسکریپت: کد ورود + تغییر تم -->
+  <!-- NEWS / BLOG -->
+  <section id="news" class="max-w-7xl mx-auto px-4 py-16">
+    <h2 class="text-2xl font-bold">اخبار و مقالات</h2>
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <article class="p-4 border rounded">
+        <h4 class="font-semibold">عنوان خبر یا مقاله</h4>
+        <p class="mt-2 text-sm text-gray-600">چکیده‌ای کوتاه از مطلب برای جذب خواننده.</p>
+        <div class="mt-3 text-sm text-sky-600">ادامه مطلب →</div>
+      </article>
+      <article class="p-4 border rounded">
+        <h4 class="font-semibold">به‌روزرسانی محصولات</h4>
+        <p class="mt-2 text-sm text-gray-600">اطلاعیه در مورد سرویس‌ها و امکانات جدید.</p>
+        <div class="mt-3 text-sm text-sky-600">ادامه مطلب →</div>
+      </article>
+      <article class="p-4 border rounded">
+        <h4 class="font-semibold">نکات امنیتی</h4>
+        <p class="mt-2 text-sm text-gray-600">نکاتی برای محافظت از وب‌سایت و داده‌ها.</p>
+        <div class="mt-3 text-sm text-sky-600">ادامه مطلب →</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="bg-sky-50 py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl font-bold">تماس با ما</h2>
+      <p class="mt-2 text-gray-600">برای درخواست خدمات یا دریافت پیش‌فاکتور، فرم را پر کنید یا از اطلاعات زیر استفاده کنید.</p>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form class="space-y-4">
+          <input class="w-full p-3 border rounded" placeholder="نام" />
+          <input class="w-full p-3 border rounded" placeholder="ایمیل" />
+          <textarea class="w-full p-3 border rounded" rows="4" placeholder="پیام"></textarea>
+          <button type="button" class="px-4 py-2 bg-sky-600 text-white rounded">ارسال</button>
+        </form>
+        <div>
+          <h3 class="font-semibold">اطلاعات تماس</h3>
+          <p class="mt-2 text-sm text-gray-700">آدرس: شهر، کشور</p>
+          <p class="mt-1 text-sm text-gray-700">تلفن: +93 700 000 000</p>
+          <p class="mt-1 text-sm text-gray-700">ایمیل: info@example.com</p>
+          <div class="mt-4 flex gap-3">
+            <a href="#" aria-label="facebook" class="text-sm">فیس‌بوک</a>
+            <a href="#" aria-label="twitter" class="text-sm">تویتر</a>
+            <a href="#" aria-label="instagram" class="text-sm">اینستاگرام</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
+      <div class="text-sm text-gray-600">© 2025 AfghanRayan. تمام حقوق محفوظ است.</div>
+      <div class="mt-3 md:mt-0 text-sm text-gray-600">طراحی و توسعه توسط تیم شما</div>
+    </div>
+  </footer>
+
   <script>
-    // --- کد ورود ساده ---
-    (function gate(){
-      var pass = prompt("برای ورود به سایت کد را وارد کنید:");
-      if (pass !== "426729") {
-        document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:50px;'>❌ کد ره که یاد نداری چرا غلط میزنی.</h1>";
-      }
-    })();
-
-    // --- تغییر تم / ذخیره انتخاب ---
-    (function theme(){
-      const btn = document.getElementById('themeToggle');
-      const doc = document.documentElement;
-
-      function applyLabel(){
-        const dark = doc.classList.contains('dark');
-        btn.textContent = dark ? "🌞 حالت روشن" : "🌓 حالت تیره";
-        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
-      }
-
-      btn.addEventListener('click', () => {
-        // اگر عمداً light شده، برگردانیم
-        if (doc.classList.contains('light')) doc.classList.remove('light');
-
-        doc.classList.toggle('dark');
-        try { localStorage.setItem('theme', doc.classList.contains('dark') ? 'dark' : 'light'); } catch(e){}
-
-        applyLabel();
-      });
-
-      // برچسب اولیه
-      applyLabel();
-    })();
+    // Mobile menu toggle
+    const btn = document.getElementById('menuBtn');
+    const mobile = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', ()=> mobile.classList.toggle('hidden'));
   </script>
 </body>
 </html>
