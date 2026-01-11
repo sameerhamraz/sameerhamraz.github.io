@@ -1,41 +1,160 @@
+# ===============================
+‏# JARVIS ULTRA - ONE FILE VERSION
+# Windows 11
+# ===============================
+
+import speech_recognition as sr
+import pyttsx3
+import datetime
+import webbrowser
+import os
+import threading
 import customtkinter as ctk
-from threading import Thread
-from jarvis_core import jarvis_brain  # هسته JARVIS
+from flask import Flask, request
+import openai
 
+# -------- CONFIG --------
+openai.api_key = "” #
+MEMORY_FILE = "memory.txt"
+
+# -------- VOICE ENGINE --------
+engine = pyttsx3.init()
+engine.setProperty("rate", 165)
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+def listen():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
+        audio = r.listen(source)
+    try:
+        return r.recognize_google(audio).lower()
+    except:
+        return ""
+
+# -------- MEMORY --------
+def save_memory(text):
+    with open(MEMORY_FILE, "a", encoding="utf-8") as f:
+        f.write(text + "\n")
+
+def load_memory():
+    if os.path.exists(MEMORY_FILE):
+        with open(MEMORY_FILE, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+# -------- AI --------
+def ai_response(prompt):
+    memory = load_memory()
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": f"User memory:\n{memory}"},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content
+    except:
+        return "AI is offline."
+
+# -------- JARVIS CORE --------
+def jarvis_brain():
+    speak("Jarvis is online.")
+    while True:
+        command = listen()
+
+        if command == "":
+            continue
+
+        # OFFLINE
+        if "time" in command:
+            speak(datetime.datetime.now().strftime("Time is %H:%M"))
+
+        elif "date" in command:
+            speak(datetime.datetime.now().strftime("Today is %B %d, %Y"))
+
+        elif "open google" in command:
+            webbrowser.open("https://google.com")
+            speak("Opening Google")
+
+        elif "open youtube" in command:
+            webbrowser.open("https://youtube.com")
+            speak("Opening YouTube")
+
+        elif "remember" in command:
+            text = command.replace("remember", "")
+            save_memory(text)
+            speak("I will remember that.")
+
+        elif "shutdown" in command:
+            speak("Shutting down system.")
+            os.system("shutdown /s /t 1")
+            break
+
+        elif "sleep" in command or "exit" in command:
+            speak("Going offline.")
+            break
+
+        # ONLINE AI
+        else:
+            reply = ai_response(command)
+            speak(reply)
+
+# -------- MOBILE SERVER --------
+app = Flask(__name__)
+
+@app.route("/command", methods=["POST"])
+def mobile_command():
+    cmd = request.json.get("cmd", "")
+    if cmd:
+        speak(f"Mobile command received: {cmd}")
+        if "youtube" in cmd:
+            webbrowser.open("https://youtube.com")
+    return {"status": "ok"}
+
+def start_mobile_server():
+    app.run(host="0.0.0.0", port=5000)
+
+# -------- GUI --------
 ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("dark-blue")
 
-app = ctk.CTk()
-app.geometry("500x350")
-app.title("J.A.R.V.I.S")
+app_ui = ctk.CTk()
+app_ui.geometry("520x360")
+app_ui.title("J.A.R.V.I.S")
 
 title = ctk.CTkLabel(
-    app,
+    app_ui,
     text="J.A.R.V.I.S",
-    font=("Orbitron", 32),
+    font=("Arial", 32),
     text_color="#00FFFF"
 )
 title.pack(pady=30)
 
 status = ctk.CTkLabel(
-    app,
+    app_ui,
     text="STATUS: ONLINE",
-    font=("Arial", 16),
-    text_color="lime"
+    text_color="lime",
+    font=("Arial", 14)
 )
 status.pack(pady=10)
 
-def start_jarvis():
-    Thread(target=jarvis_brain).start()
+def start_all():
+    threading.Thread(target=jarvis_brain, daemon=True).start()
+    threading.Thread(target=start_mobile_server, daemon=True).start()
+    status.configure(text="STATUS: ACTIVE")
 
-start_btn = ctk.CTkButton(
-    app,
-    text="▶ ACTIVATE",
-    command=start_jarvis,
+btn = ctk.CTkButton(
+    app_ui,
+    text="ACTIVATE JARVIS",
+    command=start_all,
     fg_color="#00FFFF",
     text_color="black",
     font=("Arial", 16)
 )
-start_btn.pack(pady=40)
+btn.pack(pady=40)
 
-app.mainloop()
+app_ui.mainloop()
